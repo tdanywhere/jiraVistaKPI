@@ -1,12 +1,12 @@
+import groovy.json.JsonSlurper
+
 /**
  * <p>jiraVistaKPI: </p>
  * <p>Usage: Generate and calculate Jira KPIs for VDM</p>
  * <p>Organisation: </p>
  * @author Th. Deter
- * @version 1.0
+ * @version 1.12
  */
-import groovy.json.JsonSlurper
-
 static void main(String[] args) {
   /*
   def inPath = args[0]
