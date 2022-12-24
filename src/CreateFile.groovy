@@ -20,14 +20,7 @@ public class CreateFile {
     String datePattern = "yyyy-MM-dd'T'HH:mm:ss";
     SimpleDateFormat df = new SimpleDateFormat(datePattern,Locale.GERMANY)
 
-    def outputDateFormat = "dd.MM.yyyy HH:mm:ss"
-
     println("== Create file Jira KPI ==============")
-/*
-    writer.write("ISSUE;SUMMARY;ISSUE_TYPE;STATUS;ASSIGNEE;COMPONENT;TEAM;PRIORITY;CREATOR;CREATED;VISTAMODULE;FIXVERSION;" +
-                 "CHANGES;START_BACKLOG;START_INPROGRESS;START_PAUSED;START_INCLARIFICATION;START_INCODEREVIEW;" +
-                 "START_TESTABLE;START_TESTOK;START_DELIVERED;START_INPRODUCTION" + "\n")
-*/
 
     writer.write("ISSUE;SUMMARY;ISSUE_TYPE;STATUS;ASSIGNEE;COMPONENT;TEAM;PRIORITY;CREATOR;CREATED;VISTAMODULE;" +
                  "FIXVERSION;ESTIMATEDAYS;CHANGES;STATUS_CHANGES;DURATION_CREATED;DURATION_BACKLOG;DURATION_INPROGRESS;DURATION_PAUSED;" +
@@ -43,9 +36,12 @@ public class CreateFile {
       issue.componentName + ";" +
       issue.teamName + ";" +
       issue.priorityName + ";" +
-      issue.creatorName + ";" +
-      df.parse(issue?.created?:'2022-01-01T00:00:00'.substring(0,19)).format(outputDateFormat) + ";" +
-      issue.vistaModule + ";")
+      issue.creatorName + ";")
+   
+      Date date = df.parse(issue?.created?:'2022-01-01T00:00:00'.substring(0,19))
+      writer.write(date.toLocaleString().replace(',','') + ";")
+
+      writer.write(issue.vistaModule + ";")
 
       issue.fixVersion ? writer.write(issue.fixVersion) : null
       writer.write(";")
@@ -78,7 +74,7 @@ public class CreateFile {
       // Addendum: History of all changes.
       issue.historiesMap.each() {
         keyHistMap, historyMap -> historyMap.historyItemsMap.each() {
-          keyHistItemsMap, historyItem -> historyItem.field == "status" ? writer.write(historyItem.toString + ";" + historyItem.startDate + ";") : null}
+          keyHistItemsMap, historyItem -> historyItem.field == "status" ? writer.write(historyItem.toString + ";" + df.parse(historyItem.startDate.substring(0,19)).toLocaleString().replace(',','') + ";") : null}
       }
       writer.write("\n")
     }

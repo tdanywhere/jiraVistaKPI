@@ -19,7 +19,7 @@ static void main(String[] args) {
   /**
    *  Create a map consisting of counter and Issue Beans
    */
-  def inPath = 'C:\\Dateien\\development\\projects\\jiraVistaKPI\\'
+  def inPath = 'C:\\Dateien\\development\\workspace\\jiraVistaKPI\\input\\'
   def inFileNameJson = 'jira_-_restApiResponse.json'
 
   def jsonSlurper = new JsonSlurper()
@@ -48,11 +48,10 @@ static void main(String[] args) {
 //  String apiString = 'https://jsonplaceholder.typicode.com/todos/1'
 //  String apiString = 'https://jira-hoyer.apps.teamworkx.cloud/rest/api/2/search?filter=12602&expand=issues'
 //  String apiString = 'https://jira-hoyer.apps.teamworkx.cloud/rest/api/2/search?filter=12602' // current sprint
-  String apiString = 'https://jira-hoyer.apps.teamworkx.cloud/rest/api/2/search?jql=issueKey=HV-1809&expand=changelog'
-  URL apiUrl = new URL(apiString)
-  def object = new JsonSlurper().parseText(apiUrl.text)
-
-  println "Object: $object"
+//  String apiString = 'https://jira-hoyer.apps.teamworkx.cloud/rest/api/2/search?jql=issueKey=HV-1809&expand=changelog'
+//  URL apiUrl = new URL(apiString)
+//  def object = new JsonSlurper().parseText(apiUrl.text)
+//  println "Object: $object"
  */
 
 }

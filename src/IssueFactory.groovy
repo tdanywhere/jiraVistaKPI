@@ -1,5 +1,3 @@
-import groovy.swing.binding.JComponentProperties
-
 /**
  * <p>jiraVistaKPI: </p>
  * <p>Usage: Generate and calculate Jira KPIs for VDM</p>

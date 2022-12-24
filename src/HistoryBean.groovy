@@ -1,5 +1,3 @@
-import org.apache.groovy.groovysh.commands.HistoryCommand
-
 /**
  * <p>jiraVistaKPI: </p>
  * <p>Usage: Generate and calculate Jira KPIs for VDM</p>
