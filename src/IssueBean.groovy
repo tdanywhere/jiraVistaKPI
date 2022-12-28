@@ -17,6 +17,8 @@ public class IssueBean {
   final ITEM_STATUS_TESTABLE = "Testable"
   final ITEM_STATUS_TEST_OK = "Test OK"
   final ITEM_STATUS_DELIVERED = "DELIVERED"
+  final ITEM_STATUS_DELIVERED_INST = "DELIVERED INSTALLED"
+  final ITEM_STATUS_DELIVERED_OK = "Delivered OK"
   final ITEM_STATUS_INPRODUCTION = "IN PRODUCTION"
 
   String datePattern = "yyyy-MM-dd'T'HH:mm:ss";
@@ -52,17 +54,19 @@ public class IssueBean {
   def String dateStartTestable
   def String dateStartTestOK
   def String dateStartDelivered
+  def String dateStartDeliveredInstalled
+  def String dateStartDeliveredOK
   def String dateStartInProduction
 
-  def Integer durationCreated = 0
-  def Integer durationBacklog = 0
-  def Integer durationInProgress = 0
-  def Integer durationPaused = 0
-  def Integer durationInClarification = 0
-  def Integer durationInCodeReview = 0
-  def Integer durationTestable = 0
-  def Integer durationTestOK = 0
-  def Integer durationDelivered = 0
+  def BigDecimal durationCreated = 0
+  def BigDecimal durationBacklog = 0
+  def BigDecimal durationInProgress = 0
+  def BigDecimal durationPaused = 0
+  def BigDecimal durationInClarification = 0
+  def BigDecimal durationInCodeReview = 0
+  def BigDecimal durationTestable = 0
+  def BigDecimal durationTestOK = 0
+  def BigDecimal durationDelivered = 0
 
   def String  previousHistoryDate
 
@@ -121,6 +125,10 @@ public class IssueBean {
           this.dateStartTestOK = historyItem.startDate
         }else if(historyItem.toString == ITEM_STATUS_DELIVERED){
           this.dateStartDelivered = historyItem.startDate
+        }else if(historyItem.toString == ITEM_STATUS_DELIVERED_INST){
+          this.dateStartDeliveredInstalled = historyItem.startDate
+        }else if(historyItem.toString == ITEM_STATUS_DELIVERED_OK){
+          this.dateStartDeliveredOK = historyItem.startDate
         }else if(historyItem.toString == ITEM_STATUS_INPRODUCTION){
           this.dateStartInProduction = historyItem.startDate
         }
@@ -195,6 +203,18 @@ public class IssueBean {
           // Save History Date for next call of setHistoriesMap()
           this.previousHistoryDate = history.created
         }
+        if (historyItem.fromString == this.ITEM_STATUS_DELIVERED_INST) {
+          this.durationDelivered += calcDuration(this.dateStartDeliveredInstalled ?: history.created, history.created)
+
+          // Save History Date for next call of setHistoriesMap()
+          this.previousHistoryDate = history.created
+        }
+        if (historyItem.fromString == this.ITEM_STATUS_DELIVERED_OK) {
+          this.durationDelivered += calcDuration(this.dateStartDeliveredOK ?: history.created, history.created)
+
+          // Save History Date for next call of setHistoriesMap()
+          this.previousHistoryDate = history.created
+        }
       }
     }
   }
@@ -202,10 +222,10 @@ public class IssueBean {
   /**
    * Function to calculate durations.
    */
-  def Integer calcDuration (startDate, endDate){
+  def BigDecimal calcDuration (startDate, endDate){
     def cdStartDate = df.parse(startDate)
     def cdEndDate = df.parse(endDate ?: '2022-01-01T00:00:00')
-    def Integer duration
+    def BigDecimal duration
 
     use(groovy.time.TimeCategory) {
       duration = (((cdEndDate - cdStartDate).days *24 ) + (cdEndDate - cdStartDate).hours)
