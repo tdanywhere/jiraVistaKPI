@@ -24,7 +24,7 @@ public class CreateFile {
 
     writer.write("ISSUE;SUMMARY;ISSUE_TYPE;STATUS;ASSIGNEE;COMPONENT;TEAM;PRIORITY;CREATOR;CREATED;VISTAMODULE;" +
                  "FIXVERSION;ESTIMATEDAYS;CHANGES;STATUS_CHANGES;DURATION_CREATED;DURATION_BACKLOG;DURATION_INPROGRESS;DURATION_PAUSED;" +
-                 "DURATION_INCLARIFICATION;DURATION_INCODEREVIEW;DURATION_TESTABLE;DURATION_TESTOK;DURATION_DELIVERED \n")
+                 "DURATION_INCLARIFICATION;DURATION_INCODEREVIEW;DURATION_TESTABLE;DURATION_TESTNOTOK;DURATION_TESTOK;DURATION_DELIVERED \n")
 
     // Issue.
     mapIssues.each() {keyIssue, issue -> writer.write(
@@ -56,20 +56,9 @@ public class CreateFile {
       writer.write(issue.durationInClarification + ";")
       writer.write(issue.durationInCodeReview + ";")
       writer.write(issue.durationTestable + ";")
+      writer.write(issue.durationTestNotOK + ";")
       writer.write(issue.durationTestOK + ";")
       writer.write(issue.durationDelivered + ";")
-/*
-      // Changelog.
-      issue.dateChangedBacklog ? writer.write(df.parse(issue.dateChangedBacklog.substring(0,19)).format(outputDateFormat) + ";") : writer.write("" + ";")
-      issue.dateChangedInProgress ? writer.write(df.parse(issue.dateChangedInProgress.substring(0,19)).format(outputDateFormat) + ";") : writer.write("" + ";")
-      issue.dateChangedPaused ? writer.write(df.parse(issue.dateChangedPaused.substring(0,19)).format(outputDateFormat) + ";") : writer.write("" + ";")
-      issue.dateChangedInClarification ? writer.write(df.parse(issue.dateChangedInClarification.substring(0,19)).format(outputDateFormat) + ";") : writer.write("" + ";")
-      issue.dateChangedInCodeReview ? writer.write(df.parse(issue.dateChangedInCodeReview.substring(0,19)).format(outputDateFormat) + ";") : writer.write("" + ";")
-      issue.dateChangedTestable ? writer.write(df.parse(issue.dateChangedTestable.substring(0,19)).format(outputDateFormat) + ";") : writer.write("" + ";")
-      issue.dateChangedTestOK ? writer.write(df.parse(issue.dateChangedTestOK.substring(0,19)).format(outputDateFormat) + ";") : writer.write("" + ";")
-      issue.dateChangedDelivered ? writer.write(df.parse(issue.dateChangedDelivered.substring(0,19)).format(outputDateFormat) + ";") : writer.write("" + ";")
-      issue.dateChangedInProduction ? writer.write(df.parse(issue.dateChangedInProduction.substring(0,19)).format(outputDateFormat) + ";") : writer.write("" + ";")
-*/
 
       // Addendum: History of all changes.
       issue.historiesMap.each() {

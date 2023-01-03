@@ -15,6 +15,7 @@ public class IssueBean {
   final ITEM_STATUS_INCLARIFICATION = "In Clarification"
   final ITEM_STATUS_INCODEREVIEW = "IN CODE REVIEW"
   final ITEM_STATUS_TESTABLE = "Testable"
+  final ITEM_STATUS_TEST_NOT_OK = "Test not OK"
   final ITEM_STATUS_TEST_OK = "Test OK"
   final ITEM_STATUS_DELIVERED = "DELIVERED"
   final ITEM_STATUS_DELIVERED_INST = "DELIVERED INSTALLED"
@@ -52,6 +53,7 @@ public class IssueBean {
   def String dateStartInClarification
   def String dateStartInCodeReview
   def String dateStartTestable
+  def String dateStartTestNotOK
   def String dateStartTestOK
   def String dateStartDelivered
   def String dateStartDeliveredInstalled
@@ -65,6 +67,7 @@ public class IssueBean {
   def BigDecimal durationInClarification = 0
   def BigDecimal durationInCodeReview = 0
   def BigDecimal durationTestable = 0
+  def BigDecimal durationTestNotOK = 0
   def BigDecimal durationTestOK = 0
   def BigDecimal durationDelivered = 0
 
@@ -123,6 +126,8 @@ public class IssueBean {
           this.dateStartTestable = historyItem.startDate
         }else if(historyItem.toString == ITEM_STATUS_TEST_OK){
           this.dateStartTestOK = historyItem.startDate
+        }else if(historyItem.toString == ITEM_STATUS_TEST_NOT_OK){
+          this.dateStartTestNotOK = historyItem.startDate
         }else if(historyItem.toString == ITEM_STATUS_DELIVERED){
           this.dateStartDelivered = historyItem.startDate
         }else if(historyItem.toString == ITEM_STATUS_DELIVERED_INST){
@@ -183,6 +188,14 @@ public class IssueBean {
         // Calculate duration in Status TESTABLE.
         if (historyItem.fromString == this.ITEM_STATUS_TESTABLE) {
           this.durationTestable += calcDuration(this.dateStartTestable ?: history.created, history.created)
+
+          // Save History Date for next call of setHistoriesMap()
+          this.previousHistoryDate = history.created
+        }
+
+        // Calculate duration in Status TEST NOT OK.
+        if (historyItem.fromString == this.ITEM_STATUS_TEST_NOT_OK) {
+          this.durationTestNotOK += calcDuration(this.dateStartTestNotOK ?: history.created, history.created)
 
           // Save History Date for next call of setHistoriesMap()
           this.previousHistoryDate = history.created
