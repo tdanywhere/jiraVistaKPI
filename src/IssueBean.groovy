@@ -21,6 +21,7 @@ public class IssueBean {
   final ITEM_STATUS_DELIVERED_INST = "DELIVERED INSTALLED"
   final ITEM_STATUS_DELIVERED_OK = "Delivered OK"
   final ITEM_STATUS_INPRODUCTION = "IN PRODUCTION"
+  final ITEM_STATUS_BLOCKED = "BLOCKED"
 
   String datePattern = "yyyy-MM-dd'T'HH:mm:ss";
   SimpleDateFormat df = new SimpleDateFormat(datePattern,Locale.GERMANY)
@@ -31,11 +32,13 @@ public class IssueBean {
   def String  issueType
   def String  status
   def String  assigneeName
+  def String  developerName
   def String  componentName
   def String  teamName
   def String  priorityName
   def String  creatorName
   def String  created
+  def String  updated
   def String  vistaModule
   def String  estimateDays
   def Integer changelogsTotal
@@ -53,6 +56,7 @@ public class IssueBean {
   def String dateStartInClarification
   def String dateStartInCodeReview
   def String dateStartTestable
+  def String dateStartBlocked
   def String dateStartTestNotOK
   def String dateStartTestOK
   def String dateStartDelivered
@@ -67,6 +71,7 @@ public class IssueBean {
   def BigDecimal durationInClarification = 0
   def BigDecimal durationInCodeReview = 0
   def BigDecimal durationTestable = 0
+  def BigDecimal durationBlocked = 0
   def BigDecimal durationTestNotOK = 0
   def BigDecimal durationTestOK = 0
   def BigDecimal durationDelivered = 0
@@ -76,19 +81,21 @@ public class IssueBean {
   /**
    * Construct the Issue.
    */
-  public IssueBean(key, summary, issueType, status, assigneeName, componentName
-                  ,teamName, priorityName, creatorName, created, vistaModule
-                  ,changelogsTotal, estimateDays ){
+  public IssueBean(key, summary, issueType, status, assigneeName, developerName
+                  ,componentName,teamName, priorityName, creatorName, created
+                  ,updated,vistaModule,changelogsTotal, estimateDays ){
     this.key = key
     this.summary = summary
     this.issueType = issueType
     this.status = status
     this.assigneeName = assigneeName
+    this.developerName = developerName
     this.componentName = componentName
     this.teamName = teamName
     this.priorityName = priorityName
     this.creatorName = creatorName
     this.created = created
+    this.updated = updated
     this.vistaModule = vistaModule
     this.changelogsTotal = changelogsTotal
     this.estimateDays = estimateDays
@@ -124,6 +131,8 @@ public class IssueBean {
           this.dateStartInCodeReview = historyItem.startDate
         }else if(historyItem.toString == ITEM_STATUS_TESTABLE){
           this.dateStartTestable = historyItem.startDate
+        }else if(historyItem.toString == ITEM_STATUS_BLOCKED){
+          this.dateStartBlocked = historyItem.startDate
         }else if(historyItem.toString == ITEM_STATUS_TEST_OK){
           this.dateStartTestOK = historyItem.startDate
         }else if(historyItem.toString == ITEM_STATUS_TEST_NOT_OK){
@@ -188,6 +197,14 @@ public class IssueBean {
         // Calculate duration in Status TESTABLE.
         if (historyItem.fromString == this.ITEM_STATUS_TESTABLE) {
           this.durationTestable += calcDuration(this.dateStartTestable ?: history.created, history.created)
+
+          // Save History Date for next call of setHistoriesMap()
+          this.previousHistoryDate = history.created
+        }
+
+        // Calculate duration in Status BLOCKED.
+        if (historyItem.fromString == this.ITEM_STATUS_BLOCKED) {
+          this.durationBlocked += calcDuration(this.dateStartBlocked ?: history.created, history.created)
 
           // Save History Date for next call of setHistoriesMap()
           this.previousHistoryDate = history.created

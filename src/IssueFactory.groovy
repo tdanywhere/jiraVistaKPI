@@ -24,11 +24,13 @@ public class IssueFactory {
                                   fileIncoming.issues[i]?.fields?.issuetype?.name,
                                   fileIncoming.issues[i]?.fields?.status?.name,
                                   fileIncoming.issues[i]?.fields?.assignee?.name,
+                                  fileIncoming.issues[i]?.fields?.customfield_14602?.name, // Developer
                                   fileIncoming.issues[i]?.fields?.components?.getAt(0)?.name,
                                   fileIncoming.issues[i]?.fields?.customfield_10910?.value, //TeamName
                                   fileIncoming.issues[i]?.fields?.priority?.name,
                                   fileIncoming.issues[i]?.fields?.creator?.name,
                                   fileIncoming.issues[i]?.fields?.created,
+                                  fileIncoming.issues[i]?.fields?.updated,
                                   fileIncoming.issues[i]?.fields?.customfield_11600?.value, // VistaModule
                                   fileIncoming.issues[i]?.changelog?.total,
                                   fileIncoming.issues[i]?.fields?.customfield_10708 // Estimate Days

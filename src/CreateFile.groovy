@@ -22,9 +22,9 @@ public class CreateFile {
 
     println("== Create file Jira KPI ==============")
 
-    writer.write("ISSUE;SUMMARY;ISSUE_TYPE;STATUS;ASSIGNEE;COMPONENT;TEAM;PRIORITY;CREATOR;CREATED;VISTAMODULE;" +
+    writer.write("ISSUE;SUMMARY;ISSUE_TYPE;STATUS;ASSIGNEE;DEVELOPER;TEAM;PRIORITY;CREATOR;CREATED;UPDATED;VISTAMODULE;" +
                  "FIXVERSION;ESTIMATEDAYS;CHANGES;STATUS_CHANGES;DURATION_CREATED;DURATION_BACKLOG;DURATION_INPROGRESS;DURATION_PAUSED;" +
-                 "DURATION_INCLARIFICATION;DURATION_INCODEREVIEW;DURATION_TESTABLE;DURATION_TESTNOTOK;DURATION_TESTOK;DURATION_DELIVERED \n")
+                 "DURATION_INCLARIFICATION;DURATION_INCODEREVIEW;DURATION_TESTABLE;DURATION_BLOCKED;DURATION_TESTNOTOK;DURATION_TESTOK;DURATION_DELIVERED \n")
 
     // Issue.
     mapIssues.each() {keyIssue, issue -> writer.write(
@@ -33,13 +33,16 @@ public class CreateFile {
       issue.issueType + ";" +
       issue.status + ";" +
       issue.assigneeName + ";" +
-      issue.componentName + ";" +
+      issue.developerName + ";" +
       issue.teamName + ";" +
       issue.priorityName + ";" +
       issue.creatorName + ";")
    
-      Date date = df.parse(issue?.created?:'2022-01-01T00:00:00'.substring(0,19))
-      writer.write(date.toLocaleString().replace(',','') + ";")
+      Date dateCreated = df.parse(issue?.created?:'2022-01-01T00:00:00'.substring(0,19))
+      writer.write(dateCreated.toLocaleString().replace(',','') + ";")
+
+      Date dateUpdated = df.parse(issue?.updated?:'2022-01-01T00:00:00'.substring(0,19))
+      writer.write(dateUpdated.toLocaleString().replace(',','') + ";")
 
       writer.write(issue.vistaModule + ";")
 
@@ -56,6 +59,7 @@ public class CreateFile {
       writer.write(issue.durationInClarification + ";")
       writer.write(issue.durationInCodeReview + ";")
       writer.write(issue.durationTestable + ";")
+      writer.write(issue.durationBlocked + ";")
       writer.write(issue.durationTestNotOK + ";")
       writer.write(issue.durationTestOK + ";")
       writer.write(issue.durationDelivered + ";")

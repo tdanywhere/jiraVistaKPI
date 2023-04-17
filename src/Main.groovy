@@ -19,7 +19,7 @@ static void main(String[] args) {
   /**
    *  Create a map consisting of counter and Issue Beans
    */
-  def inPath = 'C:\\Dateien\\development\\workspace\\jiraVistaKPI\\input\\'
+  def inPath = 'D:\\Eclipse\\workspaces\\Thomas Deter\\myTools\\GroovyTools\\jiraVistaKPI\\input\\'
   def inFileNameJson = 'jira_-_restApiResponse.json'
 
   def jsonSlurper = new JsonSlurper()
@@ -38,7 +38,7 @@ static void main(String[] args) {
   /*
    * Create output file.
    */
-  def outPath = 'C:\\Dateien\\development\\workspace\\jiraVistaKPI\\output\\'
+  def outPath = 'D:\\Eclipse\\workspaces\\Thomas Deter\\myTools\\GroovyTools\\jiraVistaKPI\\output\\'
   def outFileNameCsv = 'JiraKpi.csv'
   CreateFile.createFileKpiCsv(outPath, outFileNameCsv, mapIssues)
 
