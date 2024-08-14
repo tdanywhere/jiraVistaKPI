@@ -41,6 +41,8 @@ public class IssueBean {
   def String  updated
   def String  vistaModule
   def String  estimateDays
+  def String  startDate
+  def String  finishDate
   def Integer changelogsTotal
   def Integer statusChanges = 0
 
@@ -83,7 +85,7 @@ public class IssueBean {
    */
   public IssueBean(key, summary, issueType, status, assigneeName, developerName
                   ,componentName,teamName, priorityName, creatorName, created
-                  ,updated,vistaModule,changelogsTotal, estimateDays ){
+                  ,updated,vistaModule,changelogsTotal, estimateDays, startDate, finishDate ){
     this.key = key
     this.summary = summary
     this.issueType = issueType
@@ -99,6 +101,8 @@ public class IssueBean {
     this.vistaModule = vistaModule
     this.changelogsTotal = changelogsTotal
     this.estimateDays = estimateDays
+	this.startDate = startDate
+	this.finishDate = finishDate
   }
 
   /**
@@ -155,7 +159,6 @@ public class IssueBean {
 
         // Calculate duration in Status BACKLOG.
         if (historyItem.fromString == this.ITEM_STATUS_BACKLOG) {
-          //this.durationBacklog += calcDuration(this.dateChangedBacklog ?: this.previousHistoryDate ?: history.created, history.created)
           this.durationBacklog = calcDuration(this.dateStartBacklog ?: history.created, history.created)
 
           // Save History Date for next call of setHistoriesMap()

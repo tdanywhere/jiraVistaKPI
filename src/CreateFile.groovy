@@ -23,7 +23,7 @@ public class CreateFile {
     println("== Create file Jira KPI ==============")
 
     writer.write("ISSUE;SUMMARY;ISSUE_TYPE;STATUS;ASSIGNEE;DEVELOPER;TEAM;PRIORITY;CREATOR;CREATED;UPDATED;VISTAMODULE;" +
-                 "FIXVERSION;ESTIMATEDAYS;CHANGES;STATUS_CHANGES;DURATION_CREATED;DURATION_BACKLOG;DURATION_INPROGRESS;DURATION_PAUSED;" +
+                 "FIXVERSION;ESTIMATEDAYS;STARTDATE;FINISHDATE;CHANGES;STATUS_CHANGES;DURATION_CREATED;DURATION_BACKLOG;DURATION_INPROGRESS;DURATION_PAUSED;" +
                  "DURATION_INCLARIFICATION;DURATION_INCODEREVIEW;DURATION_TESTABLE;DURATION_BLOCKED;DURATION_TESTNOTOK;DURATION_TESTOK;DURATION_DELIVERED \n")
 
     // Issue.
@@ -51,6 +51,12 @@ public class CreateFile {
       issue.estimateDays ? writer.write(issue.estimateDays) : null
       writer.write(";")
 
+	  issue.startDate ? writer.write(issue.startDate) : null
+	  writer.write(";")
+	  
+	  issue.finishDate ? writer.write(issue.finishDate) : null
+	  writer.write(";")
+	  
       writer.write(issue.changelogsTotal + ";" + issue.statusChanges + ";" )
       writer.write(issue.durationCreated + ";")
       writer.write(issue.durationBacklog + ";")

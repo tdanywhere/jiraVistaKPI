@@ -33,8 +33,10 @@ public class IssueFactory {
                                   fileIncoming.issues[i]?.fields?.updated,
                                   fileIncoming.issues[i]?.fields?.customfield_11600?.value, // VistaModule
                                   fileIncoming.issues[i]?.changelog?.total,
-                                  fileIncoming.issues[i]?.fields?.customfield_10708 // Estimate Days
-        )
+                                  fileIncoming.issues[i]?.fields?.customfield_10708, // Estimate Days
+								  fileIncoming.issues[i]?.fields?.customfield_11401, // startDate
+								  fileIncoming.issues[i]?.fields?.customfield_11402 // finishDate 
+		)
 
         if(issueBean.changelogsTotal > 0){
           for (int j in 0..issueBean.changelogsTotal -1) {
