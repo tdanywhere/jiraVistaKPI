@@ -14,12 +14,12 @@ public class Main {
 	  println("== Main ============================")
 	  
 	  def inPath = args[0]
-	  def inFileNameJson = args[1]
-	  def outPath = args[2]
-	  def outFileNameCsv = args[3]
 	  println("== inPath: " + inPath)
+	  def inFileNameJson = args[1]
 	  println("== inFileNameJson: " + inFileNameJson)
+	  def outPath = args[2]
 	  println("== outPath: " + outPath)
+	  def outFileNameCsv = args[3]
 	  println("== outFileNameCsv: " + outFileNameCsv)
 	  println("")
 	  
